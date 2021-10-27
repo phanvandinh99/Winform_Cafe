@@ -8,3 +8,13 @@ C:\Users\phanv\source\repos\ThanhMinhWinform\TinhTienQuanCafe\bin\Debug\TinhTien
 C:\Users\phanv\source\repos\ThanhMinhWinform\TinhTienQuanCafe\bin\Debug\TinhTienQuanCafe.pdb
 C:\Users\phanv\source\repos\ThanhMinhWinform\TinhTienQuanCafe\obj\Debug\TinhTienQuanCafe.exe
 C:\Users\phanv\source\repos\ThanhMinhWinform\TinhTienQuanCafe\obj\Debug\TinhTienQuanCafe.pdb
+C:\Users\phanv\OneDrive\Máy tính\Winform_Cafe\ThanhMinhWinform\TinhTienQuanCafe\bin\Debug\TinhTienQuanCafe.exe.config
+C:\Users\phanv\OneDrive\Máy tính\Winform_Cafe\ThanhMinhWinform\TinhTienQuanCafe\bin\Debug\TinhTienQuanCafe.exe
+C:\Users\phanv\OneDrive\Máy tính\Winform_Cafe\ThanhMinhWinform\TinhTienQuanCafe\bin\Debug\TinhTienQuanCafe.pdb
+C:\Users\phanv\OneDrive\Máy tính\Winform_Cafe\ThanhMinhWinform\TinhTienQuanCafe\obj\Debug\TinhTienQuanCafe.FrmMain.resources
+C:\Users\phanv\OneDrive\Máy tính\Winform_Cafe\ThanhMinhWinform\TinhTienQuanCafe\obj\Debug\TinhTienQuanCafe.Properties.Resources.resources
+C:\Users\phanv\OneDrive\Máy tính\Winform_Cafe\ThanhMinhWinform\TinhTienQuanCafe\obj\Debug\TinhTienQuanCafe.csproj.GenerateResource.cache
+C:\Users\phanv\OneDrive\Máy tính\Winform_Cafe\ThanhMinhWinform\TinhTienQuanCafe\obj\Debug\TinhTienQuanCafe.csproj.CoreCompileInputs.cache
+C:\Users\phanv\OneDrive\Máy tính\Winform_Cafe\ThanhMinhWinform\TinhTienQuanCafe\obj\Debug\TinhTienQuanCafe.exe
+C:\Users\phanv\OneDrive\Máy tính\Winform_Cafe\ThanhMinhWinform\TinhTienQuanCafe\obj\Debug\TinhTienQuanCafe.pdb
+C:\Users\phanv\OneDrive\Máy tính\Winform_Cafe\ThanhMinhWinform\TinhTienQuanCafe\obj\Debug\TinhTienQuanCafe.csproj.AssemblyReference.cache

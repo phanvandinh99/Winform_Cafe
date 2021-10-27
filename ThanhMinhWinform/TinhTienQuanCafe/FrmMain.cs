@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,13 +13,13 @@ namespace TinhTienQuanCafe
 {
     public partial class FrmMain : Form
     {
-        
+
         public FrmMain()
         {
             InitializeComponent();
         }
         DataTable datatable;
-  
+
 
 
         private void FrmMain_Load(object sender, EventArgs e)
@@ -30,8 +31,9 @@ namespace TinhTienQuanCafe
             dataGrid_Product.DataSource = datatable;
 
             txtGiamGia.Text = "0";
+            txtTenKhachHang.Text = "Khách Hàng A";
 
-            
+
         }
         #region Viết sự kiện cho các button Menu
         private void btnCafeden_Click(object sender, EventArgs e)
@@ -544,15 +546,15 @@ namespace TinhTienQuanCafe
         // Tổng số lượng
         private int TongSoLuong()
         {
-                int SUM = 0;
-                DataRow row;
-                row = datatable.NewRow();
-                // cộng dồn số lượng
-                foreach (DataRow item in datatable.Rows)
-                {
-                    SUM = SUM + int.Parse(item[1].ToString());
-                }
-                return SUM;
+            int SUM = 0;
+            DataRow row;
+            row = datatable.NewRow();
+            // cộng dồn số lượng
+            foreach (DataRow item in datatable.Rows)
+            {
+                SUM = SUM + int.Parse(item[1].ToString());
+            }
+            return SUM;
         }
         // Thành tiền
         private float ThanhTien()
@@ -573,15 +575,27 @@ namespace TinhTienQuanCafe
         {
             try
             {
-                float magiamgia = float.Parse(txtGiamGia.Text);
-                labTongTien.Text = (ThanhTien() - magiamgia).ToString();
-                labTongTien.Text = string.Format("{0:0,0}", (ThanhTien() - magiamgia));
+                if (labSoLuong.Text != "0")
+                {
+                    if (txtTenKhachHang.Text != "")
+                    {
+                        float magiamgia = float.Parse(txtGiamGia.Text);
+                        labTongTien.Text = (ThanhTien() - magiamgia).ToString();
+                        labTongTien.Text = string.Format("{0:0,0}", (ThanhTien() - magiamgia));
+
+
+                    }
+                    else
+                        MessageBox.Show("Tên khách hàng trống", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                    MessageBox.Show("Khách chưa order ", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch
             {
-                MessageBox.Show("Không hợp lệ.\nVui lòng kiểm tra lại", "Thông Báo");
+                MessageBox.Show("Không hợp lệ.\nVui lòng kiểm tra lại !!!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-           
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -590,11 +604,107 @@ namespace TinhTienQuanCafe
             System.GC.Collect(); // giải phóng dung lượng
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnXoa_Click(object sender, EventArgs e)
         {
-            //dataGrid_Product.Rows.Clear();
-            //dataGrid_Product.Refresh;
-            datatable.Rows.Clear();
+            if (labSoLuong.Text != "0")
+            {
+                int rowIndex = dataGrid_Product.CurrentCell.RowIndex;
+                dataGrid_Product.Rows.RemoveAt(rowIndex);
+                labSoLuong.Text = TongSoLuong().ToString();
+                labThanhTien.Text = string.Format("{0:0,0}", (ThanhTien()));
+            }
+            else
+                MessageBox.Show("Khách chưa order", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void btnLichSu_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string filename = "";
+                StreamWriter streamwriter;
+
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    filename = saveFileDialog.FileName;
+                }
+                else
+                {
+                    filename = @"D:\XuatHoaDon.txt";
+                }
+                if (!File.Exists(filename))
+                {
+                    streamwriter = new StreamWriter(filename);
+                    streamwriter.WriteLine(string.Format("{0,-30}", dataGrid_Product.Columns[0].HeaderText) +
+                                           string.Format("{0,-10}", dataGrid_Product.Columns[1].HeaderText) +
+                                           string.Format("{0,-10}", dataGrid_Product.Columns[2].HeaderText)
+                                          );
+                    streamwriter.WriteLine("\n---------------------------------------------------");
+                    streamwriter.WriteLine(txtTenKhachHang.Text + " Time(" + DateTime.Now + ") ");
+                    for (int i = 0; i < dataGrid_Product.Rows.Count; i++)
+                    {
+                        streamwriter.WriteLine(string.Format("{0,-30}", dataGrid_Product.Rows[i].Cells[0].Value) +
+                                               string.Format("{0,-10}", dataGrid_Product.Rows[i].Cells[1].Value) +
+                                               string.Format("{0,-10}", dataGrid_Product.Rows[i].Cells[2].Value)
+                                              );
+                    }
+                    streamwriter.WriteLine(string.Format("{0,-30}", "Tổng") +
+                                           string.Format("{0,-10}", labSoLuong.Text) +
+                                           string.Format("{0,-10}", labThanhTien.Text) + "  => $: " + labTongTien.Text
+                                           );
+                }
+                else
+                {
+                    streamwriter = File.AppendText(filename);
+                    streamwriter.WriteLine("\n---------------------------------------------------");
+                    streamwriter.WriteLine(txtTenKhachHang.Text + " Time(" + DateTime.Now + ") ");
+                    for (int i = 0; i < dataGrid_Product.Rows.Count; i++)
+                    {
+                        streamwriter.WriteLine(string.Format("{0,-30}", dataGrid_Product.Rows[i].Cells[0].Value) +
+                                               string.Format("{0,-10}", dataGrid_Product.Rows[i].Cells[1].Value) +
+                                               string.Format("{0,-10}", dataGrid_Product.Rows[i].Cells[2].Value)
+                                              );
+                    }
+                    streamwriter.WriteLine(string.Format("{0,-30}", "Tổng") +
+                                           string.Format("{0,-10}", labSoLuong.Text) +
+                                           string.Format("{0,-10}", labThanhTien.Text) + "  => $: " + labTongTien.Text
+                                          );
+                }
+                streamwriter.Close();
+                MessageBox.Show("In thành công", "Thông Báo", MessageBoxButtons.OK);
+            }
+            catch
+            {
+                MessageBox.Show("In thất bại!!!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void btnHoanTat_Click(object sender, EventArgs e)
+        {
+            if (labSoLuong.Text != "0")
+            {
+                if (txtTenKhachHang.Text != "")
+                {
+                    DialogResult thongbao = MessageBox.Show("Số tiền cần trả là: " + labTongTien.Text + " vnđ\n\nXác nhận đã thanh toán nhấn YES", "Khách hàng: " + txtTenKhachHang.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    if (thongbao == DialogResult.Yes)
+                    {
+                        datatable.Rows.Clear();
+                        labSoLuong.Text = "0";
+                        labThanhTien.Text = "0";
+                        labTongTien.Text = "0";
+                        txtGiamGia.Text = "0";
+                    }
+                }
+                else
+                    MessageBox.Show("Tên khách hàng trống", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                MessageBox.Show("Thực đơn đang trống ", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
     }
 }
