@@ -32,10 +32,8 @@ namespace TinhTienQuanCafe
 
             txtGiamGia.Text = "0";
             txtTenKhachHang.Text = "Khách Hàng A";
-
-
         }
-        #region Viết sự kiện cho các button Menu
+        #region Viết sự kiện cho các button Menu (15 thức uống => 15 sự kiện)
         private void btnCafeden_Click(object sender, EventArgs e)
         {
             Boolean kiemtra = true;
